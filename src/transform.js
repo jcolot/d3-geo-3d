@@ -17,7 +17,7 @@ function TransformStream() {}
 
 TransformStream.prototype = {
   constructor: TransformStream,
-  point: function(x, y) { this.stream.point(x, y); },
+  point: function(x, y, z) { this.stream.point(x, y, z); },
   sphere: function() { this.stream.sphere(); },
   lineStart: function() { this.stream.lineStart(); },
   lineEnd: function() { this.stream.lineEnd(); },
