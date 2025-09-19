@@ -13,7 +13,7 @@ function resampleNone(project) {
   return transformer({
     point: function(x, y, z) {
       const p = project(x, y, z);
-      this.stream.point(p[0], p[1], z);
+      this.stream.point(p[0], p[1]);
     }
   });
 }
@@ -60,7 +60,7 @@ function resample(project, delta2) {
 
     function point(x, y, z) {
       const p = project(x, y, z);
-      stream.point(p[0], p[1], z);
+      stream.point(p[0], p[1]);
     }
 
     function lineStart() {
@@ -69,8 +69,8 @@ function resample(project, delta2) {
       stream.lineStart();
     }
 
-    function linePoint(lambda, phi) {
-      var c = cartesian([lambda, phi]), p = project(lambda, phi);
+    function linePoint(lambda, phi, gamma) {
+      var c = cartesian([lambda, phi, gamma]), p = project(lambda, phi, gamma);
       resampleLineTo(x0, y0, lambda0, a0, b0, c0, x0 = p[0], y0 = p[1], lambda0 = lambda, a0 = c[0], b0 = c[1], c0 = c[2], maxDepth, stream);
       stream.point(x0, y0);
     }
