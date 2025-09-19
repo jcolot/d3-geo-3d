@@ -1,9 +1,10 @@
 import compose from "./compose.js";
 import {abs, asin, atan2, cos, degrees, pi, radians, sin, tau} from "./math.js";
 
-function rotationIdentity(lambda, phi) {
+
+function rotationIdentity(lambda, phi, gamma) {
   if (abs(lambda) > pi) lambda -= Math.round(lambda / tau) * tau;
-  return [lambda, phi];
+  return [lambda, phi, gamma];
 }
 
 rotationIdentity.invert = rotationIdentity;
