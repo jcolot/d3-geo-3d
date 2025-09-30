@@ -33,7 +33,7 @@ export default function(radius) {
         v00 = v0 = false;
         clean = 1;
       },
-      point: function(lambda, phi) {
+      point: function(lambda, phi, elevation) {
         var point1 = [lambda, phi],
             point2,
             v = visible(lambda, phi),
@@ -52,11 +52,11 @@ export default function(radius) {
             // outside going in
             stream.lineStart();
             point2 = intersect(point1, point0);
-            stream.point(point2[0], point2[1]);
+            stream.point(point2[0], point2[1], elevation);
           } else {
             // inside going out
             point2 = intersect(point0, point1);
-            stream.point(point2[0], point2[1], 2);
+            stream.point(point2[0], point2[1], elevation);
             stream.lineEnd();
           }
           point0 = point2;
@@ -68,19 +68,19 @@ export default function(radius) {
             clean = 0;
             if (smallRadius) {
               stream.lineStart();
-              stream.point(t[0][0], t[0][1]);
-              stream.point(t[1][0], t[1][1]);
+              stream.point(t[0][0], t[0][1], elevation);
+              stream.point(t[1][0], t[1][1], elevation);
               stream.lineEnd();
             } else {
-              stream.point(t[1][0], t[1][1]);
+              stream.point(t[1][0], t[1][1], elevation);
               stream.lineEnd();
               stream.lineStart();
-              stream.point(t[0][0], t[0][1], 3);
+              stream.point(t[0][0], t[0][1], elevation);
             }
           }
         }
         if (v && (!point0 || !pointEqual(point0, point1))) {
-          stream.point(point1[0], point1[1]);
+          stream.point(point1[0], point1[1], elevation);
         }
         point0 = point1, v0 = v, c0 = c;
       },

@@ -17,10 +17,10 @@ export function rotateRadians(deltaLambda, deltaPhi, deltaGamma) {
 }
 
 function forwardRotationLambda(deltaLambda) {
-  return function(lambda, phi) {
+  return function(lambda, phi, elevation) {
     lambda += deltaLambda;
     if (abs(lambda) > pi) lambda -= Math.round(lambda / tau) * tau;
-    return [lambda, phi];
+    return [lambda, phi, elevation];
   };
 }
 
@@ -36,7 +36,7 @@ function rotationPhiGamma(deltaPhi, deltaGamma) {
       cosDeltaGamma = cos(deltaGamma),
       sinDeltaGamma = sin(deltaGamma);
 
-  function rotation(lambda, phi) {
+  function rotation(lambda, phi, elevation) {
     var cosPhi = cos(phi),
         x = cos(lambda) * cosPhi,
         y = sin(lambda) * cosPhi,
@@ -44,11 +44,12 @@ function rotationPhiGamma(deltaPhi, deltaGamma) {
         k = z * cosDeltaPhi + x * sinDeltaPhi;
     return [
       atan2(y * cosDeltaGamma - k * sinDeltaGamma, x * cosDeltaPhi - z * sinDeltaPhi),
-      asin(k * cosDeltaGamma + y * sinDeltaGamma)
+      asin(k * cosDeltaGamma + y * sinDeltaGamma),
+      elevation
     ];
   }
 
-  rotation.invert = function(lambda, phi) {
+  rotation.invert = function(lambda, phi, elevation) {
     var cosPhi = cos(phi),
         x = cos(lambda) * cosPhi,
         y = sin(lambda) * cosPhi,
@@ -56,7 +57,8 @@ function rotationPhiGamma(deltaPhi, deltaGamma) {
         k = z * cosDeltaGamma - y * sinDeltaGamma;
     return [
       atan2(y * cosDeltaGamma + z * sinDeltaGamma, x * cosDeltaPhi + k * sinDeltaPhi),
-      asin(k * cosDeltaPhi - x * sinDeltaPhi)
+      asin(k * cosDeltaPhi - x * sinDeltaPhi),
+      elevation
     ];
   };
 

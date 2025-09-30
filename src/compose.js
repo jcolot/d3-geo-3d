@@ -1,6 +1,5 @@
 export default function (a, b) {
   function compose(x, y, z) {
-    if (isNaN(z)) return (x = a(x, y, z)), b(x[0], x[1], x[2]);
     return (x = a(x, y, z)), b(x[0], x[1], x[2]);
   }
 
