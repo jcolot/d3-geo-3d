@@ -77,9 +77,9 @@ export default function (pointVisible, clipLine, interpolate, start) {
       line.lineEnd();
     }
 
-    function pointRing(lambda, phi) {
+    function pointRing(lambda, phi, elevation) {
       ring.push([lambda, phi]);
-      ringSink.point(lambda, phi);
+      ringSink.point(lambda, phi, elevation);
     }
 
     function ringStart() {
@@ -88,7 +88,7 @@ export default function (pointVisible, clipLine, interpolate, start) {
     }
 
     function ringEnd() {
-      pointRing(ring[0][0], ring[0][1]);
+      pointRing(ring[0][0], ring[0][1], ring[0][2]);
       ringSink.lineEnd();
 
       var clean = ringSink.clean(),
@@ -111,7 +111,7 @@ export default function (pointVisible, clipLine, interpolate, start) {
         if ((m = segment.length - 1) > 0) {
           if (!polygonStarted) sink.polygonStart(), (polygonStarted = true);
           sink.lineStart();
-          for (i = 0; i < m; ++i) sink.point((point = segment[i])[0], point[1]);
+          for (i = 0; i < m; ++i) sink.point((point = segment[i])[0], point[1], point[2]);
           sink.lineEnd();
         }
         return;

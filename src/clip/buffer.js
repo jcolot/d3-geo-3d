@@ -4,8 +4,8 @@ export default function() {
   var lines = [],
       line;
   return {
-    point: function(x, y, m) {
-      line.push([x, y, m]);
+    point: function(x, y, elevation, m) {
+      line.push([x, y, elevation, m]);
     },
     lineStart: function() {
       lines.push(line = []);

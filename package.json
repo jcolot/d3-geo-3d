@@ -1,24 +1,35 @@
 {
-  "name": "d3-geo",
-  "version": "3.1.1",
-  "description": "Shapes and calculators for spherical coordinates.",
-  "homepage": "https://d3js.org/d3-geo/",
+  "name": "d3-geo-3d",
+  "version": "3.1.1-3d.0",
+  "description": "Geospatial projections and shapes with experimental elevation (3D) support.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/d3/d3-geo.git"
+    "url": "https://github.com/jcolot/d3-geo-3d.git"
+  },
+  "homepage": "https://github.com/jcolot/d3-geo-3d",
+  "bugs": {
+    "url": "https://github.com/jcolot/d3-geo-3d/issues"
   },
   "keywords": [
     "d3",
     "d3-module",
     "geo",
     "maps",
-    "cartography"
+    "cartography",
+    "3d",
+    "elevation"
   ],
   "license": "ISC",
   "author": {
-    "name": "Mike Bostock",
-    "url": "https://bost.ocks.org/mike"
+    "name": "Julien Colot",
+    "url": "https://github.com/jcolot"
   },
+  "contributors": [
+    {
+      "name": "Mike Bostock",
+      "url": "https://bost.ocks.org/mike"
+    }
+  ],
   "type": "module",
   "files": [
     "dist/**/*.js",
@@ -26,10 +37,10 @@
   ],
   "module": "src/index.js",
   "main": "src/index.js",
-  "jsdelivr": "dist/d3-geo.min.js",
-  "unpkg": "dist/d3-geo.min.js",
+  "jsdelivr": "dist/d3-geo-3d.min.js",
+  "unpkg": "dist/d3-geo-3d.min.js",
   "exports": {
-    "umd": "./dist/d3-geo.min.js",
+    "umd": "./dist/d3-geo-3d.min.js",
     "default": "./src/index.js"
   },
   "sideEffects": false,
@@ -50,10 +61,11 @@
   },
   "scripts": {
     "test": "mocha 'test/**/*-test.js' && eslint src test",
-    "prepublishOnly": "rm -rf dist && rollup -c",
-    "postpublish": "git push && git push --tags && cd ../d3.github.com && git pull && cp ../${npm_package_name}/dist/${npm_package_name}.js ${npm_package_name}.v${npm_package_version%%.*}.js && cp ../${npm_package_name}/dist/${npm_package_name}.min.js ${npm_package_name}.v${npm_package_version%%.*}.min.js && git add ${npm_package_name}.v${npm_package_version%%.*}.js ${npm_package_name}.v${npm_package_version%%.*}.min.js && git commit -m \"${npm_package_name} ${npm_package_version}\" && git push && cd -"
+    "build": "rm -rf dist && rollup -c",
+    "prepublishOnly": "npm run build"
   },
   "engines": {
     "node": ">=12"
   }
 }
+

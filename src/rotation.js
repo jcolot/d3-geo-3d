@@ -2,9 +2,9 @@ import compose from "./compose.js";
 import {abs, asin, atan2, cos, degrees, pi, radians, sin, tau} from "./math.js";
 
 
-function rotationIdentity(lambda, phi, gamma) {
+function rotationIdentity(lambda, phi) {
   if (abs(lambda) > pi) lambda -= Math.round(lambda / tau) * tau;
-  return [lambda, phi, gamma];
+  return [lambda, phi];
 }
 
 rotationIdentity.invert = rotationIdentity;
@@ -17,10 +17,10 @@ export function rotateRadians(deltaLambda, deltaPhi, deltaGamma) {
 }
 
 function forwardRotationLambda(deltaLambda) {
-  return function(lambda, phi, elevation) {
+  return function(lambda, phi) {
     lambda += deltaLambda;
     if (abs(lambda) > pi) lambda -= Math.round(lambda / tau) * tau;
-    return [lambda, phi, elevation];
+    return [lambda, phi];
   };
 }
 
@@ -36,7 +36,7 @@ function rotationPhiGamma(deltaPhi, deltaGamma) {
       cosDeltaGamma = cos(deltaGamma),
       sinDeltaGamma = sin(deltaGamma);
 
-  function rotation(lambda, phi, elevation) {
+  function rotation(lambda, phi) {
     var cosPhi = cos(phi),
         x = cos(lambda) * cosPhi,
         y = sin(lambda) * cosPhi,
@@ -44,12 +44,11 @@ function rotationPhiGamma(deltaPhi, deltaGamma) {
         k = z * cosDeltaPhi + x * sinDeltaPhi;
     return [
       atan2(y * cosDeltaGamma - k * sinDeltaGamma, x * cosDeltaPhi - z * sinDeltaPhi),
-      asin(k * cosDeltaGamma + y * sinDeltaGamma),
-      elevation
+      asin(k * cosDeltaGamma + y * sinDeltaGamma)
     ];
   }
 
-  rotation.invert = function(lambda, phi, elevation) {
+  rotation.invert = function(lambda, phi) {
     var cosPhi = cos(phi),
         x = cos(lambda) * cosPhi,
         y = sin(lambda) * cosPhi,
@@ -57,8 +56,7 @@ function rotationPhiGamma(deltaPhi, deltaGamma) {
         k = z * cosDeltaGamma - y * sinDeltaGamma;
     return [
       atan2(y * cosDeltaGamma + z * sinDeltaGamma, x * cosDeltaPhi + k * sinDeltaPhi),
-      asin(k * cosDeltaPhi - x * sinDeltaPhi),
-      elevation
+      asin(k * cosDeltaPhi - x * sinDeltaPhi)
     ];
   };
 

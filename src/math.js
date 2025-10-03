@@ -22,6 +22,7 @@ export var sin = Math.sin;
 export var sign = Math.sign || function(x) { return x > 0 ? 1 : x < 0 ? -1 : 0; };
 export var sqrt = Math.sqrt;
 export var tan = Math.tan;
+export var isNumber = function(x) { return !isNaN(x); };
 
 export function acos(x) {
   return x > 1 ? 0 : x < -1 ? pi : Math.acos(x);

@@ -24,9 +24,9 @@ export default function(segments, compareIntersection, startInside, interpolate,
     var n, p0 = segment[0], p1 = segment[n], x;
 
     if (pointEqual(p0, p1)) {
-      if (!p0[2] && !p1[2]) {
+      if (!p0[3] && !p1[3]) {
         stream.lineStart();
-        for (i = 0; i < n; ++i) stream.point((p0 = segment[i])[0], p0[1]);
+        for (i = 0; i < n; ++i) stream.point((p0 = segment[i])[0], p0[1], p0[2]);
         stream.lineEnd();
         return;
       }
@@ -65,7 +65,7 @@ export default function(segments, compareIntersection, startInside, interpolate,
       current.v = current.o.v = true;
       if (current.e) {
         if (isSubject) {
-          for (i = 0, n = points.length; i < n; ++i) stream.point((point = points[i])[0], point[1]);
+          for (i = 0, n = points.length; i < n; ++i) stream.point((point = points[i])[0], point[1], point[2]);
         } else {
           interpolate(current.x, current.n.x, 1, stream);
         }
@@ -73,7 +73,7 @@ export default function(segments, compareIntersection, startInside, interpolate,
       } else {
         if (isSubject) {
           points = current.p.z;
-          for (i = points.length - 1; i >= 0; --i) stream.point((point = points[i])[0], point[1]);
+          for (i = points.length - 1; i >= 0; --i) stream.point((point = points[i])[0], point[1], point[2]);
         } else {
           interpolate(current.x, current.p.x, -1, stream);
         }

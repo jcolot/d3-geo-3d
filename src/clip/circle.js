@@ -44,7 +44,7 @@ export default function(radius) {
         if (v !== v0) {
           point2 = intersect(point0, point1);
           if (!point2 || pointEqual(point0, point2) || pointEqual(point1, point2))
-            point1[2] = 1;
+            point1[3] = 1; // 1 used in rejoin
         }
         if (v !== v0) {
           clean = 0;
@@ -56,7 +56,7 @@ export default function(radius) {
           } else {
             // inside going out
             point2 = intersect(point0, point1);
-            stream.point(point2[0], point2[1], elevation);
+            stream.point(point2[0], point2[1], elevation, 2); // 2 used in rejoin
             stream.lineEnd();
           }
           point0 = point2;
@@ -75,7 +75,7 @@ export default function(radius) {
               stream.point(t[1][0], t[1][1], elevation);
               stream.lineEnd();
               stream.lineStart();
-              stream.point(t[0][0], t[0][1], elevation);
+              stream.point(t[0][0], t[0][1], elevation, 2); // 2 used in rejoin
             }
           }
         }
