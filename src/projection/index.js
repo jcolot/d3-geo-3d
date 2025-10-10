@@ -94,12 +94,12 @@ export function projectionMutator(projectAt) {
     cacheStream;
 
   function projection(point) {
-    return projectRotateTransform(point[0] * radians, point[1] * radians);
+    return projectRotateTransform(point[0] * radians, point[1] * radians, point[2]);
   }
 
   function invert(point) {
-    point = projectRotateTransform.invert(point[0], point[1]);
-    return point && [point[0] * degrees, point[1] * degrees];
+    point = projectRotateTransform.invert(point[0], point[1], point[2]);
+    return point && [point[0] * degrees, point[1] * degrees, point[2]];
   }
 
   projection.stream = function (stream) {
@@ -216,6 +216,13 @@ export function projectionMutator(projectAt) {
     return fitHeight(projection, height, object);
   };
 
+  function keepElevation(fn) {
+    return function(lambda, phi, elevation) {
+      const [x, y] = fn(lambda, phi);
+      return [x, y, elevation];
+    };
+  }
+
   function recenter() {
     const projected = project(lambda, phi, elevation);
     var center = scaleTranslateRotate(k, 0, 0, sx, sy, alpha).apply(
@@ -232,7 +239,7 @@ export function projectionMutator(projectAt) {
       );
     rotate = rotateRadians(deltaLambda, deltaPhi, deltaGamma);
     projectTransform = compose(project, transform);
-    projectRotateTransform = compose(rotate, projectTransform);
+    projectRotateTransform = compose(keepElevation(rotate), projectTransform);
     projectResample = resample(projectTransform, delta2);
     return reset();
   }
